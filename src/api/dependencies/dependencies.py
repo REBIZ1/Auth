@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends, Request
+from sqlalchemy.exc import NoResultFound
 
 from src.exceptions.exceptions import EmailDeletedHTTPException, ForbiddenHTTPException
 from src.schemas.users import User
@@ -90,10 +91,13 @@ class PermissionChecker:
         permission_name = permission_map.get(request.method)
         if not permission_name:
             raise ForbiddenHTTPException
-        rule = await db.access_rule.get_rule(
-            role_id=current_user.role_id,
-            element_name=self.element_name,
-        )
+        try:
+            rule = await db.access_rule.get_rule(
+                role_id=current_user.role_id,
+                element_name=self.element_name,
+            )
+        except NoResultFound:
+            raise ForbiddenHTTPException
         allowed = getattr(rule, permission_name)
         if not allowed:
             raise ForbiddenHTTPException
