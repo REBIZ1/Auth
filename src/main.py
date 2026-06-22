@@ -2,7 +2,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html
 
+from src.api.auth import router as auth_router
+
 app = FastAPI(docs_url=None)
+
+app.include_router(auth_router)
 
 
 @app.get("/docs", include_in_schema=False)
