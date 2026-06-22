@@ -79,6 +79,11 @@ class UserNotFoundHTTPException(BaseHTTPException):
     detail = "Пользователь не найден"
 
 
+class AccessRuleNotFoundHTTPException(BaseHTTPException):
+    status_code = 404
+    detail = "Правило не найдено"
+
+
 class ForbiddenException(BaseExceptions):
     detail = "Недастаточно прав"
 
