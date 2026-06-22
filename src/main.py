@@ -3,10 +3,12 @@ from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html
 
 from src.api.auth import router as auth_router
+from src.api.access_rules import router as access_rules_router
 
 app = FastAPI(docs_url=None)
 
 app.include_router(auth_router)
+app.include_router(access_rules_router)
 
 
 @app.get("/docs", include_in_schema=False)
