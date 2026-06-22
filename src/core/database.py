@@ -2,7 +2,7 @@ from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
-from core.config import settings
+from src.core.config import settings
 
 db_params = {}
 if settings.MODE == "TEST":
